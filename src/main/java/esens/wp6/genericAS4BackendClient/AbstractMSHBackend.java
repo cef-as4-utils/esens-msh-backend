@@ -57,4 +57,12 @@ public abstract class AbstractMSHBackend {
    */
   public abstract String submitMessage(SubmissionData submissionData);
 
+  public void addBackendListener(BackendListener listener) {
+    backendListeners.add(listener);
+  }
+
+  public void removeBackendListener(BackendListener listener) {
+    backendListeners.remove(listener);
+  }
+
 }
