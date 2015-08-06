@@ -40,22 +40,29 @@ public class SubmissionData implements Serializable {
     return metadata;
   }
 
-  public static SubmissionData create(String originalSender, String finalRecipient, String refToMessageId) {
+  public static SubmissionData create(String originalSender, String finalRecipient, String fromPartyId, String toPartyId) {
     final SubmissionData metadata = create(originalSender, finalRecipient);
+    metadata.from = fromPartyId;
+    metadata.to = toPartyId;
+    return metadata;
+  }
+
+  public static SubmissionData create(String originalSender, String finalRecipient, String fromPartyId, String toPartyId, String refToMessageId) {
+    final SubmissionData metadata = create(originalSender, finalRecipient, fromPartyId, toPartyId);
     metadata.refToMessageId = refToMessageId;
     return metadata;
   }
 
-  public static SubmissionData create(String originalSender, String finalRecipient, String refToMessageId,
+  public static SubmissionData create(String originalSender, String finalRecipient, String fromPartyId, String toPartyId, String refToMessageId,
                                       String conversationId) {
-    final SubmissionData metadata = create(originalSender, finalRecipient, refToMessageId);
+    final SubmissionData metadata = create(originalSender, finalRecipient, fromPartyId, toPartyId, refToMessageId);
     metadata.conversationId = conversationId;
     return metadata;
   }
 
-  public static SubmissionData create(String originalSender, String finalRecipient, String refToMessageId,
+  public static SubmissionData create(String originalSender, String finalRecipient, String fromPartyId, String toPartyId, String refToMessageId,
                                       String conversationId, String messageId) {
-    final SubmissionData metadata = create(originalSender, finalRecipient, refToMessageId, conversationId);
+    final SubmissionData metadata = create(originalSender, finalRecipient, fromPartyId, toPartyId, refToMessageId, conversationId);
     metadata.messageId = messageId;
     return metadata;
   }
@@ -73,8 +80,9 @@ public class SubmissionData implements Serializable {
     payloads.clear();
   }
 
-  public void add(Payload payload) {
+  public SubmissionData add(Payload payload) {
     payloads.add(payload);
+    return this;
   }
 
 }
