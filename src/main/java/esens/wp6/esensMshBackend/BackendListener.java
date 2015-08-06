@@ -1,4 +1,4 @@
-package esens.wp6.genericAS4BackendClient;
+package esens.wp6.esensMshBackend;
 
 /**
  * @author: yerlibilgin
@@ -14,15 +14,15 @@ public interface BackendListener {
    * @param submissionData
    * The SubmissionData instance that contains information about the received message
    */
-  public void receiveMessage(SubmissionData submissionData);
+  public void deliver(SubmissionData submissionData);
 
 
   /**
    * Fired by the MSH backend upon receiving information about a message
-   * previously submitted to the MSH. The distinction is done by the {@link MessageStatus#messageId}
+   * previously submitted to the MSH. The distinction is done by the {@link MessageNotification#messageId}
    *
    *
-   * @param messageStatus
+   * @param messageNotification
    */
-  public void updateMessageStatus(MessageStatus messageStatus);
+  public void processNotification(MessageNotification messageNotification);
 }

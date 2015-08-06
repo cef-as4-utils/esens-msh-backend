@@ -1,4 +1,4 @@
-package esens.wp6.genericAS4BackendClient;
+package esens.wp6.esensMshBackend;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author: yerlibilgin
  * @date: 26/07/15.
  */
-public class MessageStatus implements Serializable {
+public class MessageNotification implements Serializable {
   /**
    * The ebms message id
    */
@@ -17,7 +17,7 @@ public class MessageStatus implements Serializable {
   /**
    * Status: SUCCESS, FAIL
    */
-  public MessageStatusEnum status;
+  public MessageDeliveryStatus status;
 
   /**
    * in case of success empty string or null. <br>
@@ -35,12 +35,12 @@ public class MessageStatus implements Serializable {
    * The enum that indicates the status of a message previously submitted
    * by a backend to its MSH. The MSH is responsible in informing the producer about
    * the fate of the message. If the has successfully sent to and received by the RMSH
-   * then the {@link MessageStatus#status} field has to be {@link MessageStatusEnum#SUCCESS},
-   * otherwise {@link MessageStatusEnum#FAIL}.
+   * then the {@link MessageNotification#status} field has to be {@link esens.wp6.esensMshBackend.MessageNotification.MessageDeliveryStatus#SUCCESS},
+   * otherwise {@link esens.wp6.esensMshBackend.MessageNotification.MessageDeliveryStatus#FAIL}.
    *
-   * @see esens.wp6.genericAS4BackendClient.BackendListener#updateMessageStatus(MessageStatus)
+   * @see esens.wp6.esensMshBackend.BackendListener#processNotification(MessageNotification)
    */
-  public static enum MessageStatusEnum {
+  public static enum MessageDeliveryStatus {
     SUCCESS, FAIL
   }
 }

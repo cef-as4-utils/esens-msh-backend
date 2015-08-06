@@ -1,4 +1,4 @@
-package esens.wp6.genericAS4BackendClient;
+package esens.wp6.esensMshBackend;
 
 import java.io.Serializable;
 

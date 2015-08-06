@@ -1,7 +1,6 @@
-package esens.wp6.genericAS4BackendClient;
+package esens.wp6.esensMshBackend;
 
-import esens.wp6.genericAS4BackendClient.BackendListener;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public abstract class AbstractMSHBackend {
    * A list of backend listeners that will be updated
    * when a message or a status update is received
    */
-  private List<BackendListener> backendListeners;
+  private List<BackendListener> backendListeners = new ArrayList<>();
 
   /**
    * When called, notifies all the backend listeners about the reception
@@ -26,24 +25,31 @@ public abstract class AbstractMSHBackend {
    *
    * @param submissionData
    */
-  public void receive(SubmissionData submissionData) {
+  public void deliver(SubmissionData submissionData) {
     for (BackendListener listener : backendListeners) {
-      listener.receiveMessage(submissionData);
+      listener.deliver(submissionData);
     }
   }
+
+
+  /**
+   * The party id (or the name) of the gateway that we are connecting to.
+   * @return
+   */
+  public abstract String getGatewayID();
 
   /**
    * When called, notifies all the backend listeners about the status of a message previously submitted to the MSH.
    * If the message has successfully received by the RMSH and the SMSH has received a NR receipt
-   * then the {@link esens.wp6.genericAS4BackendClient.MessageStatus#status} field is
-   * {@link esens.wp6.genericAS4BackendClient.MessageStatus.MessageStatusEnum#SUCCESS}, otherwise
-   * {@link esens.wp6.genericAS4BackendClient.MessageStatus.MessageStatusEnum#FAIL}
+   * then the {@link MessageNotification#status} field is
+   * {@link esens.wp6.esensMshBackend.MessageNotification.MessageDeliveryStatus#SUCCESS}, otherwise
+   * {@link esens.wp6.esensMshBackend.MessageNotification.MessageDeliveryStatus#FAIL}
    *
    * @param status
    */
-  public void updateMessageStatus(MessageStatus status) {
+  public void processNotification(MessageNotification status) {
     for (BackendListener listener : backendListeners) {
-      listener.updateMessageStatus(status);
+      listener.processNotification(status);
     }
   }
 
@@ -65,4 +71,12 @@ public abstract class AbstractMSHBackend {
     backendListeners.remove(listener);
   }
 
+
+  /**
+   * Conventional method for finishing after a backend interaction.
+   * Override it if you want to do specific things then.
+   */
+  public void release() {
+
+  }
 }

@@ -1,4 +1,4 @@
-package esens.wp6.genericAS4BackendClient;
+package esens.wp6.esensMshBackend;
 
 /**
  *
@@ -10,14 +10,14 @@ public abstract class AbstractMSHBackendClient implements BackendListener {
 
   private AbstractMSHBackend mshBackend;
 
-  public void submitMessage(SubmissionData submissionData) {
-    mshBackend.submitMessage(submissionData);
+  public String submitMessage(SubmissionData submissionData) {
+    return mshBackend.submitMessage(submissionData);
   }
 
   /**
    * Sets the current mshBackend for this client and adds this client
    * as a backend listener to the mshBackend. This client will
-   * receive the messages and submitted message updates.
+   * deliver the messages and submitted message updates.
    *
    * @param mshBackend
    */
@@ -26,4 +26,17 @@ public abstract class AbstractMSHBackendClient implements BackendListener {
     this.mshBackend.addBackendListener(this);
   }
 
+  /**
+   * If the backend client needs a special initalization routine, it might override this method.
+   *
+   * The default implementation does noth'n
+   */
+  public  void initialize(){
+
+  }
+
+
+  public String getGatewayID(){
+    return mshBackend.getGatewayID();
+  }
 }
