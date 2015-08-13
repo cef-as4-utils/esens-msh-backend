@@ -20,6 +20,11 @@ public class MessageNotification implements Serializable {
   public MessageDeliveryStatus status;
 
   /**
+   * Error code that will be provided by the MSH to the backend
+   */
+  public String errorCode;
+
+  /**
    * in case of success empty string or null. <br>
    * in case of failure the error description (if any)
    */

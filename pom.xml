@@ -6,7 +6,7 @@
 
     <groupId>esens.wp6</groupId>
     <artifactId>esens-msh-backend</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 
     <build>
         <plugins>
