@@ -1,8 +1,10 @@
 package esens.wp6.esensMshBackend;
 
 import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * This class contains all the information necessary for a single message submission.
@@ -16,15 +18,45 @@ import java.util.List;
 public class SubmissionData implements Serializable {
   public String originalSender;
   public String finalRecipient;
+  /**
+   * Is this a ping message
+   */
   public boolean isPingMessage;
+  /**
+   * Ref to message id - referencing to the previous ebms message id if any
+   */
   public String refToMessageId;
+  /**
+   * Conversation ID
+   */
   public String conversationId;
+  /**
+   * EBMS message ID
+   */
   public String messageId;
+  public String partyRole;
+  /**
+   * TO party ID
+   */
   public String to;
+  /**
+   * FROM party ID
+   */
   public String from;
+  /**
+   * This pmode id is used for mapping to service and actions
+   */
   public String pModeId;
 
+  /**
+   * The payloads to be carried by this submission data
+   */
   private List<Payload> payloads = new ArrayList<>();
+
+  /**
+   * This field represents the UserMessage/MessageProperties/Property items.
+   */
+  private Properties properties = new Properties();
 
   public static SubmissionData createPingMessage() {
     final SubmissionData metadata = new SubmissionData();
