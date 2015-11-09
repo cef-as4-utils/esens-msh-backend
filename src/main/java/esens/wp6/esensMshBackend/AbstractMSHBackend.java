@@ -2,6 +2,7 @@ package esens.wp6.esensMshBackend;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * This class represents a the backend of an MSH that provides
@@ -36,14 +37,14 @@ public abstract class AbstractMSHBackend {
    * The party id (or the name) of the gateway that we are connecting to.
    * @return
    */
-  public abstract String getGatewayID();
+  public abstract GatewayID getGatewayID();
 
   /**
    * When called, notifies all the backend listeners about the status of a message previously submitted to the MSH.
    * If the message has successfully received by the RMSH and the SMSH has received a NR receipt
    * then the {@link MessageNotification#status} field is
-   * {@link esens.wp6.esensMshBackend.MessageNotification.MessageDeliveryStatus#SUCCESS}, otherwise
-   * {@link esens.wp6.esensMshBackend.MessageNotification.MessageDeliveryStatus#FAIL}
+   * {@link MessageDeliveryStatus#Receipt}, otherwise
+   * {@link MessageDeliveryStatus#Error}
    *
    * @param status
    */
@@ -53,6 +54,13 @@ public abstract class AbstractMSHBackend {
     }
   }
 
+  public void processSubmissionResult(SubmissionResult submissionResult){
+    for (BackendListener listener : backendListeners) {
+      listener.processSubmissionResult(submissionResult);
+    }
+  }
+
+
   /**
    * This method is used by the backend clients to submit messages to the MSH.
    * The implementers of this class have to convert the submissiondata
@@ -61,7 +69,7 @@ public abstract class AbstractMSHBackend {
    * @param submissionData
    * @return
    */
-  public abstract String submitMessage(SubmissionData submissionData);
+  public abstract void submitMessage(SubmissionData submissionData);
 
   public void addBackendListener(BackendListener listener) {
     backendListeners.add(listener);
@@ -77,6 +85,14 @@ public abstract class AbstractMSHBackend {
    * Override it if you want to do specific things then.
    */
   public void release() {
+
+  }
+
+  /**
+   * Allow the child to initialize itself from property files
+   * @param properties
+   */
+  public void initialize(Properties properties){
 
   }
 }

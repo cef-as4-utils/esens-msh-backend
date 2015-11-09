@@ -56,7 +56,7 @@ public class SubmissionData implements Serializable {
   /**
    * This field represents the UserMessage/MessageProperties/Property items.
    */
-  private Properties properties = new Properties();
+  public Properties properties = new Properties();
 
   public static SubmissionData createPingMessage() {
     final SubmissionData metadata = new SubmissionData();
@@ -115,6 +115,10 @@ public class SubmissionData implements Serializable {
   public SubmissionData add(Payload payload) {
     payloads.add(payload);
     return this;
+  }
+
+  public static void main(String[] args) {
+    System.out.println("Helo");
   }
 
 }

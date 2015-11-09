@@ -1,17 +1,19 @@
 package esens.wp6.esensMshBackend;
 
+import java.util.Properties;
+
 /**
- *
  * A generic msh backend client that can be implemented by real clients (such as Minder Backend Client)
+ *
  * @author: yerlibilgin
  * @date: 04/08/15.
  */
-public abstract class AbstractMSHBackendClient implements BackendListener {
+public abstract class AbstractMSHBackendAdapter implements BackendListener {
 
   private AbstractMSHBackend mshBackend;
 
-  public String submitMessage(SubmissionData submissionData) {
-    return mshBackend.submitMessage(submissionData);
+  public void submitMessage(SubmissionData submissionData) {
+    mshBackend.submitMessage(submissionData);
   }
 
   /**
@@ -28,15 +30,15 @@ public abstract class AbstractMSHBackendClient implements BackendListener {
 
   /**
    * If the backend client needs a special initalization routine, it might override this method.
-   *
+   * <p>
    * The default implementation does noth'n
    */
-  public  void initialize(){
+  public void initialize(Properties properties) {
 
   }
 
 
-  public String getGatewayID(){
+  public GatewayID getGatewayID() {
     return mshBackend.getGatewayID();
   }
 }

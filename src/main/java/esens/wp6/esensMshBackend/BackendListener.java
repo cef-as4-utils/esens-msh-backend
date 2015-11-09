@@ -25,4 +25,11 @@ public interface BackendListener {
    * @param messageNotification
    */
   public void processNotification(MessageNotification messageNotification);
+
+  /**
+   * When a message is submitted from the backend, the submission result
+   * will be provided later (in an asynchronous) manner.
+   * @param submissionResult
+   */
+  public void processSubmissionResult(SubmissionResult submissionResult);
 }

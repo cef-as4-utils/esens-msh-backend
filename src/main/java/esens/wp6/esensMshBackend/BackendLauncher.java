@@ -8,14 +8,24 @@ import java.util.Properties;
  */
 public class BackendLauncher {
   public static void initialize(Properties properties) throws Exception {
-    Class<AbstractMSHBackendClient> clas = (Class<AbstractMSHBackendClient>) Class.forName(properties.getProperty("BACKEND_CLIENT_CLASS"));
-    AbstractMSHBackendClient client = clas.newInstance();
+    Class<AbstractMSHBackendAdapter> clas = (Class<AbstractMSHBackendAdapter>) Class.forName(properties.getProperty("BACKEND_ADAPTER_CLASS"));
+    AbstractMSHBackendAdapter client = clas.newInstance();
 
     Class<AbstractMSHBackend> clas2 = (Class<AbstractMSHBackend>) Class.forName(properties.getProperty("BACKEND_CLASS"));
     AbstractMSHBackend backend = clas2.newInstance();
 
-    backend.addBackendListener(client);
     client.setMshBackend(backend);
-    client.initialize();
+    client.initialize(properties);
+  }
+
+  public static void initialize(Properties properties, ClassLoader classLoader) throws Exception {
+    Class<AbstractMSHBackendAdapter> clas = (Class<AbstractMSHBackendAdapter>) classLoader.loadClass(properties.getProperty("BACKEND_ADAPTER_CLASS"));
+    AbstractMSHBackendAdapter client = clas.newInstance();
+
+    Class<AbstractMSHBackend> clas2 = (Class<AbstractMSHBackend>) classLoader.loadClass(properties.getProperty("BACKEND_CLASS"));
+    AbstractMSHBackend backend = clas2.newInstance();
+
+    client.setMshBackend(backend);
+    client.initialize(properties);
   }
 }
