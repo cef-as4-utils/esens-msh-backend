@@ -32,13 +32,6 @@ public abstract class AbstractMSHBackend {
     }
   }
 
-
-  /**
-   * The party id (or the name) of the gateway that we are connecting to.
-   * @return
-   */
-  public abstract GatewayID getGatewayID();
-
   /**
    * When called, notifies all the backend listeners about the status of a message previously submitted to the MSH.
    * If the message has successfully received by the RMSH and the SMSH has received a NR receipt
@@ -54,12 +47,27 @@ public abstract class AbstractMSHBackend {
     }
   }
 
-  public void processSubmissionResult(SubmissionResult submissionResult){
+
+  /**
+   * Fired by the msh backend in case an error occurs during the reception of the delivery message
+   * @param throwable
+   */
+  public void reportDeliverFailure(Throwable throwable){
     for (BackendListener listener : backendListeners) {
-      listener.processSubmissionResult(submissionResult);
+      listener.reportDeliverFailure(throwable);
     }
   }
 
+
+  /**
+   * Fired by the msh backend in case an error occurs during the reception of the notification message
+   * @param throwable
+   */
+  public void reportNotificationFailure(Throwable throwable){
+    for (BackendListener listener : backendListeners) {
+      listener.reportNotificationFailure(throwable);
+    }
+  }
 
   /**
    * This method is used by the backend clients to submit messages to the MSH.
@@ -79,7 +87,6 @@ public abstract class AbstractMSHBackend {
     backendListeners.remove(listener);
   }
 
-
   /**
    * Conventional method for finishing after a backend interaction.
    * Override it if you want to do specific things then.
@@ -92,7 +99,15 @@ public abstract class AbstractMSHBackend {
    * Allow the child to initialize itself from property files
    * @param properties
    */
-  public void initialize(Properties properties){
+  protected void initialize(Properties properties){
+
+  }
+
+  protected void startTest(Object context){
+
+  }
+
+  protected void finishTest(Object context){
 
   }
 }

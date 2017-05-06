@@ -19,10 +19,6 @@ public class SubmissionData implements Serializable {
   public String originalSender;
   public String finalRecipient;
   /**
-   * Is this a ping message
-   */
-  public boolean isPingMessage;
-  /**
    * Ref to message id - referencing to the previous ebms message id if any
    */
   public String refToMessageId;
@@ -34,19 +30,31 @@ public class SubmissionData implements Serializable {
    * EBMS message ID
    */
   public String messageId;
-  public String partyRole;
+
+
   /**
    * TO party ID
    */
   public String to;
   /**
+   * TO party Role
+   */
+  public String toPartyRole;
+  /**
    * FROM party ID
    */
   public String from;
   /**
+   * FROM party ID
+   */
+  public String fromPartyRole;
+  /**
    * This pmode id is used for mapping to service and actions
    */
   public String pModeId;
+
+  public String service;
+  public String action;
 
   /**
    * The payloads to be carried by this submission data
@@ -58,15 +66,8 @@ public class SubmissionData implements Serializable {
    */
   public Properties properties = new Properties();
 
-  public static SubmissionData createPingMessage() {
-    final SubmissionData metadata = new SubmissionData();
-    metadata.isPingMessage = true;
-    return metadata;
-  }
-
   public static SubmissionData create(String originalSender, String finalRecipient) {
     final SubmissionData metadata = new SubmissionData();
-    metadata.isPingMessage = false;
     metadata.originalSender = originalSender;
     metadata.finalRecipient = finalRecipient;
     return metadata;
@@ -117,8 +118,12 @@ public class SubmissionData implements Serializable {
     return this;
   }
 
-  public static void main(String[] args) {
-    System.out.println("Helo");
+  public void addProperty(String name, String value) {
+    if (this.properties == null) {
+      this.properties = new Properties();
+    }
+
+    properties.put(name, value);
   }
 
 }

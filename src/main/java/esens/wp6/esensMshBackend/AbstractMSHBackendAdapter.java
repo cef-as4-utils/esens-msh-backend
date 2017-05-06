@@ -37,8 +37,20 @@ public abstract class AbstractMSHBackendAdapter implements BackendListener {
 
   }
 
+  public final void startTest(Object context) {
+    mshBackend.startTest(context);
+    onStartTest(context);
+  }
 
-  public GatewayID getGatewayID() {
-    return mshBackend.getGatewayID();
+  protected void onStartTest(Object context){
+
+  }
+
+  public final void finishTest(Object context) {
+    mshBackend.finishTest(context);
+    onFinishTest(context);
+  }
+
+  protected void onFinishTest(Object context) {
   }
 }

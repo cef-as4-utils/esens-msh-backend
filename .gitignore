@@ -5,5 +5,4 @@ target
 *.iml
 .idea/*
 *.uml
-
 .idea/.name

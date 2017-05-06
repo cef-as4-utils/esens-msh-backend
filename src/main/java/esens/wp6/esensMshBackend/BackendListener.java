@@ -16,6 +16,12 @@ public interface BackendListener {
    */
   public void deliver(SubmissionData submissionData);
 
+  /**
+   * Fired by the msh backend in case an error occurs during the reception of the delivery message
+   * @param throwable
+   */
+  public void reportDeliverFailure(Throwable throwable);
+
 
   /**
    * Fired by the MSH backend upon receiving information about a message
@@ -26,10 +32,13 @@ public interface BackendListener {
    */
   public void processNotification(MessageNotification messageNotification);
 
+
+
   /**
-   * When a message is submitted from the backend, the submission result
-   * will be provided later (in an asynchronous) manner.
-   * @param submissionResult
+   * Fired by the msh backend in case an error occurs during the reception of the notification message
+   * @param throwable
    */
-  public void processSubmissionResult(SubmissionResult submissionResult);
+  public void reportNotificationFailure(Throwable throwable);
+
+
 }
